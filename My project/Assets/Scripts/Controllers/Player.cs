@@ -11,7 +11,7 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-
+        transform.position = transform.position + Vector3.right * 0.001f;
     }
 
 }
