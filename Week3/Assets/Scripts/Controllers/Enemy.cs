@@ -6,8 +6,8 @@ public class Enemy : MonoBehaviour
     public GameObject enemyPrefab;
     public Transform[] spawnPoints;
     public float WaitSceonds = 3f;
-    public Transform Player;
 
+    public Transform Player;
     public float moveSpeed = 2f;
 
     private void Start()
