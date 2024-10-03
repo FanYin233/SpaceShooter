@@ -46,6 +46,8 @@ public class Player : MonoBehaviour
         PlayerMovement();
 
         Debug.Log("CurrentSpeed" + CurrentSpeed);
+
+        EnemyRadar(5f, 6);
     }
 
     void PlayerMovement()
@@ -73,7 +75,30 @@ public class Player : MonoBehaviour
         transform.position += velocity * Time.deltaTime;
     }
 
+    public void EnemyRadar(float radius, int circlePoints)
+    {
+        Vector3 playerPosition = transform.position;
+        float distanceToEnemy = Vector3.Distance(playerPosition, enemyTransform.position);
+        bool enemyWithinRadius = distanceToEnemy <= radius;
 
+        float angleStep = 360f / circlePoints;
+        Vector3 previousPoint = Vector3.zero;
 
+        for (int i = 0; i <= circlePoints; i++)
+        {
+            float angle = i * angleStep * Mathf.Deg2Rad;
+            float x = Mathf.Cos(angle) * radius;
+            float y = Mathf.Sin(angle) * radius;
 
+            Vector3 newPoint = new Vector3(x, y, 0) + playerPosition;
+
+            if (i > 0)
+            {
+                Color lineColor = enemyWithinRadius ? Color.red : Color.green;
+                Debug.DrawLine(previousPoint, newPoint, lineColor, 0.1f);
+            }
+
+            previousPoint = newPoint;
+        }
+    }
 }
