@@ -17,10 +17,12 @@ public class Player : MonoBehaviour
 
     private Vector3 velocity = Vector3.zero;
     public float acceleration;
+    public float rotationSpeed = 5f;
 
     private void Start()
     {
         acceleration = MaxSpeed / timeToTargetSpeed;
+
         List<string> words = new List<string>();
         words.Add("Dog");
         words.Add("Cat");
@@ -44,6 +46,7 @@ public class Player : MonoBehaviour
         //transform.position = transform.position + Vector3.right * 0.001f;
 
         PlayerMovement();
+        RotatePlayerTowardsMovement();
 
         Debug.Log("CurrentSpeed" + CurrentSpeed);
 
@@ -73,6 +76,16 @@ public class Player : MonoBehaviour
 
         velocity = direction * CurrentSpeed;
         transform.position += velocity * Time.deltaTime;
+    }
+
+    void RotatePlayerTowardsMovement()
+    {
+        if (velocity.magnitude > 0.1f)
+        {
+            float angle = Mathf.Atan2(velocity.y, velocity.x) * Mathf.Rad2Deg;
+            Quaternion targetRotation = Quaternion.Euler(0, 0, angle);
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+        }
     }
 
     public void EnemyRadar(float radius, int circlePoints)
