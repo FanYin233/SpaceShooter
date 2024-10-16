@@ -3275,6 +3275,10 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6890330259706833056, guid: abc125f00ae369940b2c5c0275186637, type: 3}
+      propertyPath: missilePrefab
+      value: 
+      objectReference: {fileID: 1761202055222398, guid: 561200a1f15bfaa449ccc4cb56a3a980, type: 3}
+    - target: {fileID: 6890330259706833056, guid: abc125f00ae369940b2c5c0275186637, type: 3}
       propertyPath: bombsTransform
       value: 
       objectReference: {fileID: 1615314664}
@@ -3294,6 +3298,10 @@ PrefabInstance:
       propertyPath: decelerationTime
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 6890330259706833056, guid: abc125f00ae369940b2c5c0275186637, type: 3}
+      propertyPath: missileSpawnPoint
+      value: 
+      objectReference: {fileID: 1358387484}
     - target: {fileID: 6890330259706833056, guid: abc125f00ae369940b2c5c0275186637, type: 3}
       propertyPath: numberOfTrailBombs
       value: 3

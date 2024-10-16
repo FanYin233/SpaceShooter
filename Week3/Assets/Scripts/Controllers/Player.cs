@@ -9,6 +9,12 @@ public class Player : MonoBehaviour
     public Transform enemyTransform;
     public GameObject bombPrefab;
     public Transform bombsTransform;
+    public Transform missileSpawnPoint;
+    public GameObject missilePrefab;
+    public float missileSpeed = 10f;
+    public float missileCooldown = 0.5f;
+
+    private float missileCooldownTimer = 0f;
 
     public float CurrentSpeed = 0f;
 
@@ -51,6 +57,27 @@ public class Player : MonoBehaviour
         Debug.Log("CurrentSpeed" + CurrentSpeed);
 
         EnemyRadar(5f, 6);
+
+        ShootMissile();
+
+        if (missileCooldownTimer > 0)
+        {
+            missileCooldownTimer -= Time.deltaTime;
+        }
+    }
+
+    void ShootMissile()
+    {
+        if (Input.GetKeyDown(KeyCode.Space) && missileCooldownTimer <= 0f)
+        {
+            GameObject missile = Instantiate(missilePrefab, missileSpawnPoint.position, missileSpawnPoint.rotation);
+
+            Rigidbody2D missileRb = missile.GetComponent<Rigidbody2D>();
+
+            missileRb.velocity = transform.right * missileSpeed;
+
+            missileCooldownTimer = missileCooldown;
+        }
     }
 
     void PlayerMovement()
@@ -83,7 +110,7 @@ public class Player : MonoBehaviour
         if (velocity.magnitude > 0.1f)
         {
             float angle = Mathf.Atan2(velocity.y, velocity.x) * Mathf.Rad2Deg;
-            Quaternion targetRotation = Quaternion.Euler(0, 0, angle);
+            Quaternion targetRotation = Quaternion.Euler(0, 0, angle + 90);
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
         }
     }
