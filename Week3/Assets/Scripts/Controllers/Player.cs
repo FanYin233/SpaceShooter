@@ -7,8 +7,11 @@ public class Player : MonoBehaviour
 {
     public List<Transform> asteroidTransforms;
     public Transform enemyTransform;
+
     public GameObject bombPrefab;
     public Transform bombsTransform;
+    public Transform bombSpawnPoint;
+
     public Transform missileSpawnPoint;
     public GameObject missilePrefab;
     public float missileSpeed = 10f;
@@ -24,6 +27,9 @@ public class Player : MonoBehaviour
     private Vector3 velocity = Vector3.zero;
     public float acceleration;
     public float rotationSpeed = 5f;
+
+    private float bombCooldown = 2f;
+    private float bombCooldownTimer = 0f;
 
     private void Start()
     {
@@ -56,7 +62,7 @@ public class Player : MonoBehaviour
 
         Debug.Log("CurrentSpeed" + CurrentSpeed);
 
-        EnemyRadar(5f, 6);
+        //EnemyRadar(5f, 6);
 
         ShootMissile();
 
@@ -64,7 +70,21 @@ public class Player : MonoBehaviour
         {
             missileCooldownTimer -= Time.deltaTime;
         }
+
+        bombCooldownTimer -= Time.deltaTime;
+
+        if (Input.GetKeyDown(KeyCode.B) && bombCooldownTimer <= 0f)
+        {
+            DropBomb();
+            bombCooldownTimer = bombCooldown;
+        }
     }
+
+    void DropBomb()
+    {
+        Instantiate(bombPrefab, bombSpawnPoint.position, Quaternion.identity);
+    }
+    
 
     void ShootMissile()
     {
@@ -77,6 +97,8 @@ public class Player : MonoBehaviour
             missileRb.velocity = transform.right * missileSpeed;
 
             missileCooldownTimer = missileCooldown;
+
+            Debug.Log("space Down");
         }
     }
 
@@ -114,8 +136,8 @@ public class Player : MonoBehaviour
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
         }
     }
-
-    public void EnemyRadar(float radius, int circlePoints)
+/*
+    void EnemyRadar(float radius, int circlePoints)
     {
         Vector3 playerPosition = transform.position;
         float distanceToEnemy = Vector3.Distance(playerPosition, enemyTransform.position);
@@ -140,5 +162,10 @@ public class Player : MonoBehaviour
 
             previousPoint = newPoint;
         }
+
+        float distance = Vector3.Distance(transform.position, enemyTransform.position);
+        Debug.Log(distance);
     }
+*/
 }
+

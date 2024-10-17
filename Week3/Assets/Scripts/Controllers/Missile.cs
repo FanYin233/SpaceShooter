@@ -15,7 +15,7 @@ public class Missile : MonoBehaviour
 
     private void Update()
     {
-        transform.Translate(Vector3.up * speed * Time.deltaTime);
+        transform.position+=transform.up * speed * Time.deltaTime;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -23,7 +23,6 @@ public class Missile : MonoBehaviour
         if (collision.CompareTag("Enemy"))
         {
             Destroy(collision.gameObject);
-
             Destroy(gameObject);
         }
     }
