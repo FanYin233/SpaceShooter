@@ -94,7 +94,7 @@ public class Player : MonoBehaviour
 
             Rigidbody2D missileRb = missile.GetComponent<Rigidbody2D>();
 
-            missileRb.velocity = transform.right * missileSpeed;
+            missileRb.velocity = transform.up * missileSpeed;
 
             missileCooldownTimer = missileCooldown;
 
